@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { SEED, addExperiment, countByStatus, filterExperiments, parseExperiments, removeExperiment, setStatus } from "@/lib/lab";
+import { SEED, addExperiment, countByStatus, formatLogged, restoreExperiment, filterExperiments, parseExperiments, removeExperiment, setStatus } from "@/lib/lab";
 
 describe("parseExperiments", () => {
   it("returns null for missing, corrupt or non-array data so the sample is used", () => {
@@ -47,5 +47,17 @@ describe("notebook edits", () => {
     expect(countByStatus(moved)).toEqual({ total: 2, active: 0, done: 2 });
     expect(SEED[0].status).toBe("Active");
     expect(removeExperiment(SEED, "mono-type").map((i) => i.id)).toEqual(["edge-runtime"]);
+  });
+});
+
+const SAMPLE = SEED;
+describe("restore and dates", () => {
+  it("restores before the old neighbour, at the end otherwise, never twice; dates print in UTC", () => {
+    const [a, b] = SAMPLE;
+    expect(restoreExperiment([b], a, b.id).map((e) => e.id)).toEqual([a.id, b.id]);
+    expect(restoreExperiment([b], a, null).map((e) => e.id)).toEqual([b.id, a.id]);
+    expect(restoreExperiment([b], a, "gone").map((e) => e.id)).toEqual([b.id, a.id]);
+    expect(restoreExperiment(SAMPLE, a, null)).toBe(SAMPLE);
+    expect(formatLogged(0)).toBe("1 Jan 1970");
   });
 });

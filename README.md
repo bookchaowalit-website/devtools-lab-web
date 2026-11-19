@@ -39,4 +39,5 @@ scan on every push and PR to `main`.
   (a visitor's own entries never leave the browser).
 - `lib/sentry.ts` + `instrumentation*.ts`: error reporting to Sentry, errors only, personal data stripped; off when
   `NEXT_PUBLIC_SENTRY_DSN` is unset.
-- `app/more-projects/page.tsx`: shared portfolio link page (copied per repository, not a package).
+- `app/app-shell.css` + `components/app-shell.tsx`: the shared App shell (copied in, see `APP-SHELL.md`).
+  `/more-projects` is a permanent redirect to https://bookchaowalit.com/.

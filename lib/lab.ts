@@ -77,3 +77,19 @@ export function setStatus(items: Experiment[], id: string, status: ExperimentSta
 export function removeExperiment(items: Experiment[], id: string): Experiment[] {
   return items.filter((item) => item.id !== id);
 }
+
+/**
+ * Put a removed entry back before the entry that followed it when it was removed (`beforeId`), or at the end
+ * when that entry is gone too. An entry that is already present is not added twice.
+ */
+export function restoreExperiment(items: Experiment[], item: Experiment, beforeId: string | null): Experiment[] {
+  if (items.some((entry) => entry.id === item.id)) return items;
+  const index = beforeId === null ? -1 : items.findIndex((entry) => entry.id === beforeId);
+  if (index < 0) return [...items, item];
+  return [...items.slice(0, index), item, ...items.slice(index)];
+}
+
+/** "10 Mar 2024" in UTC, so the server and every browser print the same date. */
+export function formatLogged(timestamp: number): string {
+  return new Date(timestamp).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
+}

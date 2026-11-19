@@ -1,5 +1,10 @@
 # Design direction
 
+> **Current look (2026-11-19):** the notebook uses the shared **App shell** (`APP-SHELL.md`): Geist, light and dark,
+> state lists with counts in the sidebar, a New experiment composer that opens in place, rows with a tinted state
+> select (44px) and an undoable Remove. The bench-notebook notes below are the earlier look, kept for history; its
+> palette, dial and serif are no longer shipped.
+
 ## Product world
 
 Lab is a bench notebook: experiments are specimens pinned beside an instrument readout, with an observation field that keeps the next question attached to the result. It is a local trace-making tool, not a simulated research platform.
