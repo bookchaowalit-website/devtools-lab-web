@@ -101,8 +101,11 @@ describe("rows, lists and search", () => {
     press(button("Draft", $(".as-side")!));
     type($<HTMLInputElement>(".as-search input")!, "zzz");
     expect(host.textContent).toContain("Nothing matches");
+    (document.activeElement as HTMLElement | null)?.blur();
+    button("Show all experiments").focus();
     press(button("Show all experiments"));
     expect($("h1")!.textContent).toBe("All experiments");
+    expect(document.activeElement).toBe($(".as-search input"));
     press(button("Clear search"));
     expect(document.activeElement).toBe($(".as-search input"));
     expect(rows()).toHaveLength(3);

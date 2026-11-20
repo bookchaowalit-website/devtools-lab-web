@@ -143,6 +143,11 @@ export default function Home() {
     setQuery("");
     searchRef.current?.focus();
   }
+  // The button removes itself once the filter widens, so keep focus in the search field (which stays put).
+  function showAll() {
+    setFilter("All");
+    searchRef.current?.focus();
+  }
   function remove(record: RecordItem, viaKeyboard: boolean) {
     let entry: RemovedEntry | undefined;
     setRecords((current) => {
@@ -267,7 +272,7 @@ export default function Home() {
                   No experiment in {filter === "All" ? "the notebook" : title} mentions “{trimmed}”.
                   <div className="lab-empty-actions">
                     <button type="button" className="as-plain" onClick={clearSearch}>Clear search</button>
-                    {filter !== "All" ? <button type="button" className="as-plain" onClick={() => setFilter("All")}>Show all experiments</button> : null}
+                    {filter !== "All" ? <button type="button" className="as-plain" onClick={showAll}>Show all experiments</button> : null}
                   </div>
                 </>
               ) : records.length === 0 ? (
